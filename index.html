@@ -9,11 +9,51 @@
       href="https://unpkg.com/bootstrap/dist/css/bootstrap.css"
     />
   </head>
+  <style>
+    body {
+      text-align: center;
+      padding: 2%;
+    }
+  </style>
   <body>
+    <h3>IMDBeezy</h3>
+    <form id="form">
+      <label for="title">
+        Title:
+        <input type="text" name="title" id="title" required />
+      </label>
+      <br />
+      <label for="rating">
+        Rating:
+        <input type="number" name="rating" id="rating" required />
+      </label>
+      <br />
+      <button type="submit">Rate!</button>
+    </form>
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script>
       $(() => {
         console.log("Loaded...");
+        console.log($(document));
+        //TODO: move to js file and implement sorting
+        $("#title").attr({ minlength: 2 });
+        $("#rating").attr({ min: 0, max: 10 });
+        $("#form").on("submit", event => {
+          event.preventDefault();
+          const movieTitle = event.target.title.value;
+          const movieRating = event.target.rating.value;
+          console.log(movieTitle, movieRating);
+
+          $("body")
+            .append(
+              `<h4>${movieTitle} - "${movieRating} out of 10 stars!" <button>X</button></h4>`
+            )
+            .on("click", "h4 button", event => {
+              $(event.target)
+                .parent()
+                .remove();
+            });
+        });
       });
     </script>
   </body>
